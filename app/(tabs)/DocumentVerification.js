@@ -2,15 +2,7 @@ import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import {
-  Alert,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function DocumentVerification() {
   const router = useRouter();
@@ -30,25 +22,15 @@ export default function DocumentVerification() {
 
     let result;
     if (pickFrom === 'camera') {
-      result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        quality: 1,
-      });
+      result = await ImagePicker.launchCameraAsync({ allowsEditing: true, quality: 1 });
     } else {
-      result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        quality: 1,
-      });
+      result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, allowsEditing: true, quality: 1 });
     }
 
     if (!result.canceled && result.assets.length > 0) {
       const imageUri = result.assets[0].uri;
-      if (side === 'front') {
-        setFrontImage(imageUri);
-      } else {
-        setBackImage(imageUri);
-      }
+      if (side === 'front') setFrontImage(imageUri);
+      else setBackImage(imageUri);
     }
   };
 
@@ -58,11 +40,7 @@ export default function DocumentVerification() {
       <Text style={styles.subtitle}>Upload the necessary document for verification</Text>
 
       <View style={styles.inputGroup}>
-        <Picker
-          selectedValue={idType}
-          onValueChange={(itemValue) => setIdType(itemValue)}
-          style={styles.picker}
-        >
+        <Picker selectedValue={idType} onValueChange={(itemValue) => setIdType(itemValue)} style={styles.picker}>
           <Picker.Item label="Select ID Card" value="" />
           <Picker.Item label="NIN" value="NIN" />
           <Picker.Item label="Voter’s Card" value="VOTER" />
@@ -72,16 +50,12 @@ export default function DocumentVerification() {
       </View>
 
       <TouchableOpacity style={styles.uploadBtn} onPress={() => pickImage('front')}>
-        <Text style={styles.uploadText}>
-          {frontImage ? 'Front Image Uploaded' : 'Upload Front of ID'}
-        </Text>
+        <Text style={styles.uploadText}>{frontImage ? 'Front Image Uploaded' : 'Upload Front of ID'}</Text>
       </TouchableOpacity>
       {frontImage && <Image source={{ uri: frontImage }} style={styles.preview} />}
 
       <TouchableOpacity style={styles.uploadBtn} onPress={() => pickImage('back')}>
-        <Text style={styles.uploadText}>
-          {backImage ? 'Back Image Uploaded' : 'Upload Back of ID'}
-        </Text>
+        <Text style={styles.uploadText}>{backImage ? 'Back Image Uploaded' : 'Upload Back of ID'}</Text>
       </TouchableOpacity>
       {backImage && <Image source={{ uri: backImage }} style={styles.preview} />}
 
@@ -100,57 +74,14 @@ export default function DocumentVerification() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 60,
-    backgroundColor: '#fff',
-    flexGrow: 1,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 5,
-  },
-  subtitle: {
-    fontSize: 12,
-    marginBottom: 20,
-    color: '#999',
-  },
-  inputGroup: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 6,
-    marginBottom: 15,
-  },
-  picker: {
-    height: 50,
-    width: '100%',
-  },
-  uploadBtn: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    borderRadius: 6,
-    padding: 12,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  uploadText: {
-    fontSize: 14,
-  },
-  preview: {
-    width: '100%',
-    height: 200,
-    borderRadius: 6,
-    marginBottom: 20,
-    resizeMode: 'cover',
-  },
-  button: {
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+  container: { padding: 20, paddingTop: 60, backgroundColor: '#fff', flexGrow: 1 },
+  title: { fontSize: 18, fontWeight: '600', marginBottom: 5 },
+  subtitle: { fontSize: 12, marginBottom: 20, color: '#999' },
+  inputGroup: { borderWidth: 1, borderColor: '#ccc', borderRadius: 6, marginBottom: 15 },
+  picker: { height: 50, width: '100%' },
+  uploadBtn: { borderWidth: 1, borderColor: '#aaa', borderRadius: 6, padding: 12, marginBottom: 15, alignItems: 'center' },
+  uploadText: { fontSize: 14 },
+  preview: { width: '100%', height: 200, borderRadius: 6, marginBottom: 20, resizeMode: 'cover' },
+  button: { padding: 15, borderRadius: 8, alignItems: 'center' },
+  buttonText: { color: '#fff', fontWeight: 'bold' },
 });
